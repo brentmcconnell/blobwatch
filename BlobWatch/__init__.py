@@ -75,7 +75,7 @@ def main(myblob: func.InputStream):
     if len(filepath_tuple) == 0:
         raise Exception(f"This appears to be a misconfiguration. Ensure input_PATH is set correctly")
 
-    # Strip off the container name from the paths.  We are creating a tuple to pass to the function.
+    # Strip off the container name from the paths.  We are creating a tuple with 1 element to pass to the function.
     output_path_tuple = subtract_common_path_elements(output_tuple, (output_container_name,))
     myblob_minus_container_tuple = subtract_common_path_elements(myblob_tuple, (input_container_name,))
 
@@ -93,21 +93,23 @@ def main(myblob: func.InputStream):
     full_output_path = f"{output_path_only}/{date}/{filepath_only}".lstrip("/")
 
     # Let's log some stuff here
-    logging.info(f"filepath_tuple: {filepath_tuple}")
-    logging.info(f"output_path_tuple: {output_path_tuple}")
-    logging.info(f"myblob_without_container_path: {myblob_without_container_path}")
-    logging.info(f"myblob_minus_container_tuple: {myblob_minus_container_tuple}")
-    logging.info(f"input_parts: {input_tuple}")
-    logging.info(f"output_parts: {output_tuple}")
-    logging.info(f"myblob_parts: {myblob_tuple}")
-    logging.info(f"output_path_tuple: {output_path_tuple}")
-    logging.info(f"filename_only: {filepath_only}")
-    logging.info(f"input_container: {input_container_name}")
-    logging.info(f"output_container: {output_container_name}")
-    logging.info(f"output_path_only: {output_path_only}")
-    logging.info(f"filepath_only: {filepath_only}")
-    logging.info(f"myblob_without_container_path: {myblob_without_container_path}")
-    logging.info(f"full_output_path: {full_output_path}")
+    logging.info(f"""
+     filepath_tuple: {filepath_tuple}
+     output_path_tuple: {output_path_tuple}
+     myblob_without_container_path: {myblob_without_container_path}
+     myblob_minus_container_tuple: {myblob_minus_container_tuple}
+     input_parts: {input_tuple}
+     output_parts: {output_tuple}
+     myblob_parts: {myblob_tuple}
+     output_path_tuple: {output_path_tuple}
+     filename_only: {filepath_only}
+     input_container: {input_container_name}
+     output_container: {output_container_name}
+     output_path_only: {output_path_only}
+     filepath_only: {filepath_only}
+     myblob_without_container_path: {myblob_without_container_path}
+     full_output_path: {full_output_path}
+    """)
 
     # Create the BlobServiceClient from the connectionstring in the app settings    
     blob_service_client = BlobServiceClient.from_connection_string(os.environ["app_STORAGE"])
